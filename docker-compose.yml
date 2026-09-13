@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: aivoa_complaints
+      POSTGRES_USER: aivoa
+      POSTGRES_PASSWORD: aivoa_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - aivoa_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aivoa -d aivoa_complaints"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  aivoa_postgres:
+
